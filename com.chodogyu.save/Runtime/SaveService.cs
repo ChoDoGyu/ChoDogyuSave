@@ -55,7 +55,7 @@ namespace CDG.Save
 
         /// <summary>
         /// 지정한 저장 슬롯에서 데이터를 불러옵니다.
-        /// 기본 저장 파일을 우선 사용하며 기본 파일이 없으면 백업 저장 파일을 확인합니다.
+        /// 기본 저장 파일을 우선 사용하며 사용할 수 없는 경우 백업 저장 파일을 사용하여 복구를 시도합니다.
         /// 두 파일 모두 존재하지 않는 경우 실패가 아닌 NotFound 결과를 반환합니다.
         /// </summary>
         /// <typeparam name="T">불러올 저장 데이터의 타입입니다.</typeparam>
@@ -74,41 +74,22 @@ namespace CDG.Save
             {
                 Result<T> primaryDeserializeResult = serializer.Deserialize<T>(primaryReadResult.Value);
 
-                if (primaryDeserializeResult.IsFailure)
+                if (primaryDeserializeResult.IsSuccess)
                 {
-                    return Result<LoadResult<T>>.Failure(primaryDeserializeResult.Error);
+                    return Result<LoadResult<T>>.Success(
+                        LoadResult<T>.FromPrimary(primaryDeserializeResult.Value));
                 }
 
-                return Result<LoadResult<T>>.Success(
-                    LoadResult<T>.FromPrimary(primaryDeserializeResult.Value));
+                return LoadFromBackup<T>(
+                    slot,
+                    primaryReadResult.Error,
+                    primaryDeserializeResult.Error);
             }
 
-            if (primaryReadResult.Error.Code != SaveErrorCodes.StorageNotFound)
-            {
-                return Result<LoadResult<T>>.Failure(primaryReadResult.Error);
-            }
-
-            Result<byte[]> backupReadResult = storage.Read(slot, SaveStorageCopy.Backup);
-
-            if (backupReadResult.IsFailure)
-            {
-                if (backupReadResult.Error.Code == SaveErrorCodes.StorageNotFound)
-                {
-                    return Result<LoadResult<T>>.Success(LoadResult<T>.NotFound());
-                }
-
-                return Result<LoadResult<T>>.Failure(backupReadResult.Error);
-            }
-
-            Result<T> backupDeserializeResult = serializer.Deserialize<T>(backupReadResult.Value);
-
-            if (backupDeserializeResult.IsFailure)
-            {
-                return Result<LoadResult<T>>.Failure(backupDeserializeResult.Error);
-            }
-
-            return Result<LoadResult<T>>.Success(
-                LoadResult<T>.FromBackup(backupDeserializeResult.Value));
+            return LoadFromBackup<T>(
+                slot,
+                primaryReadResult.Error,
+                null);
         }
 
         internal Result WriteCopies(SaveSlot slot, byte[] data)
@@ -130,6 +111,45 @@ namespace CDG.Save
             }
 
             return Result.Success();
+        }
+
+        private Result<LoadResult<T>> LoadFromBackup<T>(SaveSlot slot, ResultError primaryReadError, ResultError primaryDeserializeError)
+        {
+            Result<byte[]> backupReadResult = storage.Read(slot, SaveStorageCopy.Backup);
+
+            if (backupReadResult.IsSuccess)
+            {
+                Result<T> backupDeserializeResult = serializer.Deserialize<T>(backupReadResult.Value);
+
+                if (backupDeserializeResult.IsSuccess)
+                {
+                    return Result<LoadResult<T>>.Success(
+                        LoadResult<T>.FromBackup(backupDeserializeResult.Value));
+                }
+
+                return Result<LoadResult<T>>.Failure(new ResultError(
+                    SaveErrorCodes.CorruptedData,
+                    $"백업 저장 데이터도 정상적으로 복원할 수 없습니다. {backupDeserializeResult.Error.Message}"));
+            }
+
+            if (backupReadResult.Error.Code != SaveErrorCodes.StorageNotFound)
+            {
+                return Result<LoadResult<T>>.Failure(backupReadResult.Error);
+            }
+
+            if (primaryDeserializeError != null)
+            {
+                return Result<LoadResult<T>>.Failure(new ResultError(
+                    SaveErrorCodes.CorruptedData,
+                    $"기본 저장 데이터를 복원할 수 없으며 사용할 수 있는 백업 파일도 없습니다. {primaryDeserializeError.Message}"));
+            }
+
+            if (primaryReadError.Code == SaveErrorCodes.StorageNotFound)
+            {
+                return Result<LoadResult<T>>.Success(LoadResult<T>.NotFound());
+            }
+
+            return Result<LoadResult<T>>.Failure(primaryReadError);
         }
 
         private static void ValidateSlot(SaveSlot slot)
