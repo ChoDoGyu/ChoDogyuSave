@@ -7,6 +7,12 @@
       "dependencies": {},
       "hash": "aeec0a4de7eb2b0878dfa8d6ded969422884b667"
     },
+    "com.chodogyu.save": {
+      "version": "file:../../com.chodogyu.save",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.10",
       "depth": 0,

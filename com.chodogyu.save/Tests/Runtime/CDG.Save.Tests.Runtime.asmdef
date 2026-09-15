@@ -1,0 +1,21 @@
+{
+  "name": "CDG.Save.Tests.Runtime",
+  "rootNamespace": "CDG.Save.Tests.Runtime",
+  "references": [
+    "CDG.Save"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
