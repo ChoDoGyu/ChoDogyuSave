@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using NUnit.Framework;
 
 namespace CDG.Save.Tests.Runtime
@@ -61,7 +61,7 @@ namespace CDG.Save.Tests.Runtime
         [TestCase("slot\\01")]
         [TestCase("../slot")]
         [TestCase("slot01!")]
-        [TestCase("½½·Ô")]
+        [TestCase("ìŠ¬ë¡¯")]
         public void Constructor_InvalidCharacter_ThrowsArgumentException(string name)
         {
             Assert.Throws<ArgumentException>(() => new SaveSlot(name));
