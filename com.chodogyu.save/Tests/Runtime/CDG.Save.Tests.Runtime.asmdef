@@ -2,7 +2,8 @@
   "name": "CDG.Save.Tests.Runtime",
   "rootNamespace": "CDG.Save.Tests.Runtime",
   "references": [
-    "CDG.Save"
+    "CDG.Save",
+    "CDG.Core"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
