@@ -28,6 +28,31 @@ namespace CDG.Save
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
+        /// <summary>
+        /// 지정한 저장 데이터를 직렬화하여 기본 저장 파일과 백업 저장 파일에 기록합니다.
+        /// 데이터는 한 번만 직렬화되며 동일한 직렬화 결과를 두 저장 파일에 사용합니다.
+        /// </summary>
+        /// <typeparam name="T">저장할 데이터의 타입입니다.</typeparam>
+        /// <param name="slot">데이터를 기록할 저장 슬롯입니다.</param>
+        /// <param name="data">저장할 데이터입니다.</param>
+        /// <returns>직렬화 및 저장 작업의 성공 또는 실패 결과입니다.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="slot"/>이 null인 경우 발생합니다.
+        /// </exception>
+        public Result Save<T>(SaveSlot slot, T data)
+        {
+            ValidateSlot(slot);
+
+            Result<byte[]> serializationResult = serializer.Serialize(data);
+
+            if (serializationResult.IsFailure)
+            {
+                return Result.Failure(serializationResult.Error);
+            }
+
+            return WriteCopies(slot, serializationResult.Value);
+        }
+
         internal Result WriteCopies(SaveSlot slot, byte[] data)
         {
             Result primaryResult = storage.Write(slot, SaveStorageCopy.Primary, data);
@@ -47,6 +72,14 @@ namespace CDG.Save
             }
 
             return Result.Success();
+        }
+
+        private static void ValidateSlot(SaveSlot slot)
+        {
+            if (slot == null)
+            {
+                throw new ArgumentNullException(nameof(slot));
+            }
         }
     }
 }
