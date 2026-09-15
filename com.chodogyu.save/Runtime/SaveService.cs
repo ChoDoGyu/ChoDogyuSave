@@ -53,6 +53,64 @@ namespace CDG.Save
             return WriteCopies(slot, serializationResult.Value);
         }
 
+        /// <summary>
+        /// 지정한 저장 슬롯에서 데이터를 불러옵니다.
+        /// 기본 저장 파일을 우선 사용하며 기본 파일이 없으면 백업 저장 파일을 확인합니다.
+        /// 두 파일 모두 존재하지 않는 경우 실패가 아닌 NotFound 결과를 반환합니다.
+        /// </summary>
+        /// <typeparam name="T">불러올 저장 데이터의 타입입니다.</typeparam>
+        /// <param name="slot">데이터를 불러올 저장 슬롯입니다.</param>
+        /// <returns>불러오기 상태와 데이터를 포함하는 성공 결과 또는 실패 결과입니다.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="slot"/>이 null인 경우 발생합니다.
+        /// </exception>
+        public Result<LoadResult<T>> Load<T>(SaveSlot slot)
+        {
+            ValidateSlot(slot);
+
+            Result<byte[]> primaryReadResult = storage.Read(slot, SaveStorageCopy.Primary);
+
+            if (primaryReadResult.IsSuccess)
+            {
+                Result<T> primaryDeserializeResult = serializer.Deserialize<T>(primaryReadResult.Value);
+
+                if (primaryDeserializeResult.IsFailure)
+                {
+                    return Result<LoadResult<T>>.Failure(primaryDeserializeResult.Error);
+                }
+
+                return Result<LoadResult<T>>.Success(
+                    LoadResult<T>.FromPrimary(primaryDeserializeResult.Value));
+            }
+
+            if (primaryReadResult.Error.Code != SaveErrorCodes.StorageNotFound)
+            {
+                return Result<LoadResult<T>>.Failure(primaryReadResult.Error);
+            }
+
+            Result<byte[]> backupReadResult = storage.Read(slot, SaveStorageCopy.Backup);
+
+            if (backupReadResult.IsFailure)
+            {
+                if (backupReadResult.Error.Code == SaveErrorCodes.StorageNotFound)
+                {
+                    return Result<LoadResult<T>>.Success(LoadResult<T>.NotFound());
+                }
+
+                return Result<LoadResult<T>>.Failure(backupReadResult.Error);
+            }
+
+            Result<T> backupDeserializeResult = serializer.Deserialize<T>(backupReadResult.Value);
+
+            if (backupDeserializeResult.IsFailure)
+            {
+                return Result<LoadResult<T>>.Failure(backupDeserializeResult.Error);
+            }
+
+            return Result<LoadResult<T>>.Success(
+                LoadResult<T>.FromBackup(backupDeserializeResult.Value));
+        }
+
         internal Result WriteCopies(SaveSlot slot, byte[] data)
         {
             Result primaryResult = storage.Write(slot, SaveStorageCopy.Primary, data);
