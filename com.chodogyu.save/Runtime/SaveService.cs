@@ -92,6 +92,57 @@ namespace CDG.Save
                 null);
         }
 
+        /// <summary>
+        /// 지정한 슬롯에 기본 또는 백업 저장 파일이 존재하는지 확인합니다.
+        /// 두 저장 파일 중 하나라도 존재하면 true를 반환합니다.
+        /// </summary>
+        /// <param name="slot">존재 여부를 확인할 저장 슬롯입니다.</param>
+        /// <returns>성공 시 저장 데이터 존재 여부를 포함하는 결과입니다.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="slot"/>이 null인 경우 발생합니다.
+        /// </exception>
+        public Result<bool> Exists(SaveSlot slot)
+        {
+            ValidateSlot(slot);
+
+            Result<bool> primaryResult = storage.Exists(slot, SaveStorageCopy.Primary);
+
+            if (primaryResult.IsFailure)
+            {
+                return primaryResult;
+            }
+
+            if (primaryResult.Value)
+            {
+                return Result<bool>.Success(true);
+            }
+
+            return storage.Exists(slot, SaveStorageCopy.Backup);
+        }
+
+        /// <summary>
+        /// 지정한 슬롯의 기본 저장 파일과 백업 저장 파일을 삭제합니다.
+        /// 기본 저장 파일 삭제가 실패하면 백업 저장 파일은 삭제하지 않습니다.
+        /// </summary>
+        /// <param name="slot">삭제할 저장 슬롯입니다.</param>
+        /// <returns>두 저장 파일 삭제 작업의 성공 또는 실패 결과입니다.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="slot"/>이 null인 경우 발생합니다.
+        /// </exception>
+        public Result Delete(SaveSlot slot)
+        {
+            ValidateSlot(slot);
+
+            Result primaryResult = storage.Delete(slot, SaveStorageCopy.Primary);
+
+            if (primaryResult.IsFailure)
+            {
+                return primaryResult;
+            }
+
+            return storage.Delete(slot, SaveStorageCopy.Backup);
+        }
+
         internal Result WriteCopies(SaveSlot slot, byte[] data)
         {
             Result primaryResult = storage.Write(slot, SaveStorageCopy.Primary, data);
