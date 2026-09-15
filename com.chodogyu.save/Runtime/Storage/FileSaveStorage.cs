@@ -45,6 +45,7 @@ namespace CDG.Save.Storage
         public Result Write(SaveSlot slot, SaveStorageCopy copy, byte[] data)
         {
             string path = GetPath(slot, copy);
+            string tempPath = GetTempPath(slot);
 
             if (data == null)
             {
@@ -56,15 +57,19 @@ namespace CDG.Save.Storage
             try
             {
                 Directory.CreateDirectory(rootPath);
-                File.WriteAllBytes(path, data);
+
+                File.WriteAllBytes(tempPath, data);
+                ReplaceFile(tempPath, path);
 
                 return Result.Success();
             }
             catch (Exception exception)
             {
+                TryDeleteTempFile(tempPath);
+
                 return Result.Failure(new ResultError(
                     SaveErrorCodes.StorageWriteFailed,
-                    $"저장 파일을 기록하지 못했습니다. {exception.Message}"));
+                    $"저장 파일을 안전하게 기록하지 못했습니다. {exception.Message}"));
             }
         }
 
@@ -176,6 +181,28 @@ namespace CDG.Save.Storage
         {
             ValidateSlot(slot);
             return Path.Combine(rootPath, slot.Name + TempExtension);
+        }
+
+        private static void ReplaceFile(string tempPath, string targetPath)
+        {
+            if (File.Exists(targetPath))
+            {
+                File.Replace(tempPath, targetPath, null);
+                return;
+            }
+
+            File.Move(tempPath, targetPath);
+        }
+
+        private static void TryDeleteTempFile(string tempPath)
+        {
+            try
+            {
+                File.Delete(tempPath);
+            }
+            catch
+            {
+            }
         }
 
         private static void ValidateSlot(SaveSlot slot)
