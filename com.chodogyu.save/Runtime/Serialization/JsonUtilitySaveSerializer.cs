@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Text;
 using CDG.Core.Results;
 using UnityEngine;
@@ -6,15 +6,15 @@ using UnityEngine;
 namespace CDG.Save.Serialization
 {
     /// <summary>
-    /// UnityÀÇ JsonUtility¸¦ »ç¿ëÇÏ¿© ÀúÀå µ¥ÀÌÅÍ¸¦ JSON ±â¹İ UTF-8 ¹ÙÀÌÆ® ¹è¿­·Î º¯È¯ÇÕ´Ï´Ù.
-    /// JsonUtility°¡ Áö¿øÇÏ´Â Á÷·ÄÈ­ ±ÔÄ¢À» µû¸£¸ç ÆÄÀÏ ÀúÀåÀÌ³ª °æ·Î °ü¸®´Â ´ã´çÇÏÁö ¾Ê½À´Ï´Ù.
+    /// Unityì˜ JsonUtilityë¥¼ ì‚¬ìš©í•˜ì—¬ ì €ì¥ ë°ì´í„°ë¥¼ JSON ê¸°ë°˜ UTF-8 ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë³€í™˜í•©ë‹ˆë‹¤.
+    /// JsonUtilityê°€ ì§€ì›í•˜ëŠ” ì§ë ¬í™” ê·œì¹™ì„ ë”°ë¥´ë©° íŒŒì¼ ì €ì¥ì´ë‚˜ ê²½ë¡œ ê´€ë¦¬ëŠ” ë‹´ë‹¹í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     /// </summary>
     public sealed class JsonUtilitySaveSerializer : ISaveSerializer
     {
         private static readonly UTF8Encoding Utf8Encoding = new UTF8Encoding(false, true);
 
         /// <summary>
-        /// ÁöÁ¤ÇÑ ÀúÀå µ¥ÀÌÅÍ¸¦ JSONÀ¸·Î º¯È¯ÇÑ µÚ UTF-8 ¹ÙÀÌÆ® ¹è¿­·Î Á÷·ÄÈ­ÇÕ´Ï´Ù.
+        /// ì§€ì •í•œ ì €ì¥ ë°ì´í„°ë¥¼ JSONìœ¼ë¡œ ë³€í™˜í•œ ë’¤ UTF-8 ë°”ì´íŠ¸ ë°°ì—´ë¡œ ì§ë ¬í™”í•©ë‹ˆë‹¤.
         /// </summary>
         public Result<byte[]> Serialize<T>(T data)
         {
@@ -22,7 +22,7 @@ namespace CDG.Save.Serialization
             {
                 return Result<byte[]>.Failure(new ResultError(
                     SaveErrorCodes.InvalidData,
-                    "Á÷·ÄÈ­ÇÒ ÀúÀå µ¥ÀÌÅÍ´Â nullÀÏ ¼ö ¾ø½À´Ï´Ù."));
+                    "ì§ë ¬í™”í•  ì €ì¥ ë°ì´í„°ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤."));
             }
 
             try
@@ -36,12 +36,12 @@ namespace CDG.Save.Serialization
             {
                 return Result<byte[]>.Failure(new ResultError(
                     SaveErrorCodes.SerializationFailed,
-                    $"ÀúÀå µ¥ÀÌÅÍ¸¦ JSONÀ¸·Î Á÷·ÄÈ­ÇÏÁö ¸øÇß½À´Ï´Ù. {exception.Message}"));
+                    $"ì €ì¥ ë°ì´í„°ë¥¼ JSONìœ¼ë¡œ ì§ë ¬í™”í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. {exception.Message}"));
             }
         }
 
         /// <summary>
-        /// UTF-8 ¹ÙÀÌÆ® ¹è¿­À» JSON ¹®ÀÚ¿­·Î º¯È¯ÇÑ µÚ ÁöÁ¤ÇÑ ÀúÀå µ¥ÀÌÅÍ Å¸ÀÔÀ¸·Î ¿ªÁ÷·ÄÈ­ÇÕ´Ï´Ù.
+        /// UTF-8 ë°”ì´íŠ¸ ë°°ì—´ì„ JSON ë¬¸ìì—´ë¡œ ë³€í™˜í•œ ë’¤ ì§€ì •í•œ ì €ì¥ ë°ì´í„° íƒ€ì…ìœ¼ë¡œ ì—­ì§ë ¬í™”í•©ë‹ˆë‹¤.
         /// </summary>
         public Result<T> Deserialize<T>(byte[] data)
         {
@@ -49,7 +49,7 @@ namespace CDG.Save.Serialization
             {
                 return Result<T>.Failure(new ResultError(
                     SaveErrorCodes.InvalidData,
-                    "¿ªÁ÷·ÄÈ­ÇÒ ÀúÀå µ¥ÀÌÅÍ´Â nullÀÌ°Å³ª ºñ¾î ÀÖÀ» ¼ö ¾ø½À´Ï´Ù."));
+                    "ì—­ì§ë ¬í™”í•  ì €ì¥ ë°ì´í„°ëŠ” nullì´ê±°ë‚˜ ë¹„ì–´ ìˆì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤."));
             }
 
             try
@@ -61,7 +61,7 @@ namespace CDG.Save.Serialization
                 {
                     return Result<T>.Failure(new ResultError(
                         SaveErrorCodes.DeserializationFailed,
-                        "JSON µ¥ÀÌÅÍ¿¡¼­ ÀúÀå µ¥ÀÌÅÍ¸¦ º¹¿øÇÏÁö ¸øÇß½À´Ï´Ù."));
+                        "JSON ë°ì´í„°ì—ì„œ ì €ì¥ ë°ì´í„°ë¥¼ ë³µì›í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤."));
                 }
 
                 return Result<T>.Success(value);
@@ -70,7 +70,7 @@ namespace CDG.Save.Serialization
             {
                 return Result<T>.Failure(new ResultError(
                     SaveErrorCodes.DeserializationFailed,
-                    $"ÀúÀå µ¥ÀÌÅÍ¸¦ JSON¿¡¼­ ¿ªÁ÷·ÄÈ­ÇÏÁö ¸øÇß½À´Ï´Ù. {exception.Message}"));
+                    $"ì €ì¥ ë°ì´í„°ë¥¼ JSONì—ì„œ ì—­ì§ë ¬í™”í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. {exception.Message}"));
             }
         }
     }

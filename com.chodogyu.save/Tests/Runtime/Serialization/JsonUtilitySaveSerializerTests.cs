@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using CDG.Core.Results;
 using CDG.Save.Serialization;

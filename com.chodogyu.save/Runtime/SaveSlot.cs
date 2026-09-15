@@ -1,34 +1,34 @@
-using System;
+ï»¿using System;
 
 namespace CDG.Save
 {
     /// <summary>
-    /// ÀúÀå µ¥ÀÌÅÍ¸¦ ±¸ºÐÇÏ±â À§ÇÑ ½½·Ô ÀÌ¸§À» ³ªÅ¸³À´Ï´Ù.
-    /// »ý¼ºµÈ SaveSlotÀº Ç×»ó À¯È¿ÇÑ ÀÌ¸§À» °¡Áö¸ç ÀúÀå °æ·Î ÀÚÃ¼´Â ³ëÃâÇÏÁö ¾Ê½À´Ï´Ù.
+    /// ì €ìž¥ ë°ì´í„°ë¥¼ êµ¬ë¶„í•˜ê¸° ìœ„í•œ ìŠ¬ë¡¯ ì´ë¦„ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
+    /// ìƒì„±ëœ SaveSlotì€ í•­ìƒ ìœ íš¨í•œ ì´ë¦„ì„ ê°€ì§€ë©° ì €ìž¥ ê²½ë¡œ ìžì²´ëŠ” ë…¸ì¶œí•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     /// </summary>
     public sealed class SaveSlot : IEquatable<SaveSlot>
     {
         /// <summary>
-        /// ½½·Ô ÀÌ¸§À¸·Î Çã¿ëµÇ´Â ÃÖ´ë ±æÀÌÀÔ´Ï´Ù.
+        /// ìŠ¬ë¡¯ ì´ë¦„ìœ¼ë¡œ í—ˆìš©ë˜ëŠ” ìµœëŒ€ ê¸¸ì´ìž…ë‹ˆë‹¤.
         /// </summary>
         public const int MaxLength = 64;
 
         /// <summary>
-        /// ±âº» ÀúÀå ½½·ÔÀÔ´Ï´Ù.
+        /// ê¸°ë³¸ ì €ìž¥ ìŠ¬ë¡¯ìž…ë‹ˆë‹¤.
         /// </summary>
         public static SaveSlot Default { get; } = new SaveSlot("default");
 
         /// <summary>
-        /// ÀúÀå ½½·Ô ÀÌ¸§ÀÔ´Ï´Ù.
+        /// ì €ìž¥ ìŠ¬ë¡¯ ì´ë¦„ìž…ë‹ˆë‹¤.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// ÁöÁ¤ÇÑ ÀÌ¸§À¸·Î ÀúÀå ½½·ÔÀ» »ý¼ºÇÕ´Ï´Ù.
-        /// ÀÌ¸§Àº ¿µ¹® ¼Ò¹®ÀÚ, ¼ýÀÚ, ÇÏÀÌÇÂ(-), ¹ØÁÙ(_)¸¸ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.
+        /// ì§€ì •í•œ ì´ë¦„ìœ¼ë¡œ ì €ìž¥ ìŠ¬ë¡¯ì„ ìƒì„±í•©ë‹ˆë‹¤.
+        /// ì´ë¦„ì€ ì˜ë¬¸ ì†Œë¬¸ìž, ìˆ«ìž, í•˜ì´í”ˆ(-), ë°‘ì¤„(_)ë§Œ ì‚¬ìš©í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
         /// </summary>
-        /// <param name="name">ÀúÀå ½½·Ô ÀÌ¸§ÀÔ´Ï´Ù.</param>
-        /// <exception cref="ArgumentException">ÀÌ¸§ÀÌ ºñ¾î ÀÖ°Å³ª Çã¿ë ±ÔÄ¢À» À§¹ÝÇÑ °æ¿ì ¹ß»ýÇÕ´Ï´Ù.</exception>
+        /// <param name="name">ì €ìž¥ ìŠ¬ë¡¯ ì´ë¦„ìž…ë‹ˆë‹¤.</param>
+        /// <exception cref="ArgumentException">ì´ë¦„ì´ ë¹„ì–´ ìžˆê±°ë‚˜ í—ˆìš© ê·œì¹™ì„ ìœ„ë°˜í•œ ê²½ìš° ë°œìƒí•©ë‹ˆë‹¤.</exception>
         public SaveSlot(string name)
         {
             ValidateName(name);
@@ -36,7 +36,7 @@ namespace CDG.Save
         }
 
         /// <summary>
-        /// ´Ù¸¥ SaveSlot°ú µ¿ÀÏÇÑ ½½·Ô ÀÌ¸§À» °¡Áö´ÂÁö ºñ±³ÇÕ´Ï´Ù.
+        /// ë‹¤ë¥¸ SaveSlotê³¼ ë™ì¼í•œ ìŠ¬ë¡¯ ì´ë¦„ì„ ê°€ì§€ëŠ”ì§€ ë¹„êµí•©ë‹ˆë‹¤.
         /// </summary>
         public bool Equals(SaveSlot other)
         {
@@ -61,7 +61,7 @@ namespace CDG.Save
         }
 
         /// <summary>
-        /// ½½·Ô ÀÌ¸§À» ¹®ÀÚ¿­·Î ¹ÝÈ¯ÇÕ´Ï´Ù.
+        /// ìŠ¬ë¡¯ ì´ë¦„ì„ ë¬¸ìžì—´ë¡œ ë°˜í™˜í•©ë‹ˆë‹¤.
         /// </summary>
         public override string ToString()
         {
@@ -92,19 +92,19 @@ namespace CDG.Save
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentException("ÀúÀå ½½·Ô ÀÌ¸§Àº ºñ¾î ÀÖÀ» ¼ö ¾ø½À´Ï´Ù.", nameof(name));
+                throw new ArgumentException("ì €ìž¥ ìŠ¬ë¡¯ ì´ë¦„ì€ ë¹„ì–´ ìžˆì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", nameof(name));
             }
 
             if (name.Length > MaxLength)
             {
-                throw new ArgumentException($"ÀúÀå ½½·Ô ÀÌ¸§Àº {MaxLength}ÀÚ¸¦ ÃÊ°úÇÒ ¼ö ¾ø½À´Ï´Ù.", nameof(name));
+                throw new ArgumentException($"ì €ìž¥ ìŠ¬ë¡¯ ì´ë¦„ì€ {MaxLength}ìžë¥¼ ì´ˆê³¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", nameof(name));
             }
 
             for (int i = 0; i < name.Length; i++)
             {
                 if (!IsAllowedCharacter(name[i]))
                 {
-                    throw new ArgumentException("ÀúÀå ½½·Ô ÀÌ¸§¿¡´Â ¿µ¹® ¼Ò¹®ÀÚ, ¼ýÀÚ, ÇÏÀÌÇÂ(-), ¹ØÁÙ(_)¸¸ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.", nameof(name));
+                    throw new ArgumentException("ì €ìž¥ ìŠ¬ë¡¯ ì´ë¦„ì—ëŠ” ì˜ë¬¸ ì†Œë¬¸ìž, ìˆ«ìž, í•˜ì´í”ˆ(-), ë°‘ì¤„(_)ë§Œ ì‚¬ìš©í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.", nameof(name));
                 }
             }
         }

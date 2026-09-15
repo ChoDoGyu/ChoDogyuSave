@@ -1,32 +1,32 @@
-using System;
+ï»¿using System;
 
 namespace CDG.Save
 {
     /// <summary>
-    /// ÀúÀå µ¥ÀÌÅÍ ºÒ·¯¿À±â ÀÛ¾÷ÀÌ ¼º°øÇßÀ» ¶§ÀÇ ¼¼ºÎ °á°ú¸¦ ³ªÅ¸³À´Ï´Ù.
-    /// µ¥ÀÌÅÍ°¡ ¾ø´Â Á¤»ó »óÅÂ¿Í ±âº» ¶Ç´Â ¹é¾÷ ÆÄÀÏ¿¡¼­ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Â »óÅÂ¸¦ ±¸ºÐÇÕ´Ï´Ù.
+    /// ì €ìž¥ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° ìž‘ì—…ì´ ì„±ê³µí–ˆì„ ë•Œì˜ ì„¸ë¶€ ê²°ê³¼ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
+    /// ë°ì´í„°ê°€ ì—†ëŠ” ì •ìƒ ìƒíƒœì™€ ê¸°ë³¸ ë˜ëŠ” ë°±ì—… íŒŒì¼ì—ì„œ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¨ ìƒíƒœë¥¼ êµ¬ë¶„í•©ë‹ˆë‹¤.
     /// </summary>
-    /// <typeparam name="T">ºÒ·¯¿Â ÀúÀå µ¥ÀÌÅÍÀÇ Å¸ÀÔÀÔ´Ï´Ù.</typeparam>
+    /// <typeparam name="T">ë¶ˆëŸ¬ì˜¨ ì €ìž¥ ë°ì´í„°ì˜ íƒ€ìž…ìž…ë‹ˆë‹¤.</typeparam>
     public sealed class LoadResult<T>
     {
         private readonly T _value;
 
         /// <summary>
-        /// ÀúÀå µ¥ÀÌÅÍ ºÒ·¯¿À±â »óÅÂÀÔ´Ï´Ù.
+        /// ì €ìž¥ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° ìƒíƒœìž…ë‹ˆë‹¤.
         /// </summary>
         public SaveLoadStatus Status { get; }
 
         /// <summary>
-        /// ½ÇÁ¦·Î ºÒ·¯¿Â ÀúÀå µ¥ÀÌÅÍ°¡ ÀÖ´Â »óÅÂÀÎÁö¸¦ ³ªÅ¸³À´Ï´Ù.
+        /// ì‹¤ì œë¡œ ë¶ˆëŸ¬ì˜¨ ì €ìž¥ ë°ì´í„°ê°€ ìžˆëŠ” ìƒíƒœì¸ì§€ë¥¼ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤.
         /// </summary>
         public bool IsFound => Status != SaveLoadStatus.NotFound;
 
         /// <summary>
-        /// ºÒ·¯¿Â ÀúÀå µ¥ÀÌÅÍ¸¦ ¹ÝÈ¯ÇÕ´Ï´Ù.
-        /// µ¥ÀÌÅÍ°¡ ¾ø´Â »óÅÂ¿¡¼­ Á¢±ÙÇÏ¸é <see cref="InvalidOperationException"/>ÀÌ ¹ß»ýÇÕ´Ï´Ù.
+        /// ë¶ˆëŸ¬ì˜¨ ì €ìž¥ ë°ì´í„°ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
+        /// ë°ì´í„°ê°€ ì—†ëŠ” ìƒíƒœì—ì„œ ì ‘ê·¼í•˜ë©´ <see cref="InvalidOperationException"/>ì´ ë°œìƒí•©ë‹ˆë‹¤.
         /// </summary>
         /// <exception cref="InvalidOperationException">
-        /// <see cref="SaveLoadStatus.NotFound"/> »óÅÂ¿¡¼­ Value¿¡ Á¢±ÙÇÑ °æ¿ì ¹ß»ýÇÕ´Ï´Ù.
+        /// <see cref="SaveLoadStatus.NotFound"/> ìƒíƒœì—ì„œ Valueì— ì ‘ê·¼í•œ ê²½ìš° ë°œìƒí•©ë‹ˆë‹¤.
         /// </exception>
         public T Value
         {
@@ -34,7 +34,7 @@ namespace CDG.Save
             {
                 if (!IsFound)
                 {
-                    throw new InvalidOperationException("ºÒ·¯¿Â ÀúÀå µ¥ÀÌÅÍ°¡ ¾ø´Â »óÅÂ¿¡¼­´Â Value¿¡ Á¢±ÙÇÒ ¼ö ¾ø½À´Ï´Ù.");
+                    throw new InvalidOperationException("ë¶ˆëŸ¬ì˜¨ ì €ìž¥ ë°ì´í„°ê°€ ì—†ëŠ” ìƒíƒœì—ì„œëŠ” Valueì— ì ‘ê·¼í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 }
 
                 return _value;
@@ -48,7 +48,7 @@ namespace CDG.Save
         }
 
         /// <summary>
-        /// ÀúÀå µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê´Â Á¤»ó °á°ú¸¦ »ý¼ºÇÕ´Ï´Ù.
+        /// ì €ìž¥ ë°ì´í„°ê°€ ì¡´ìž¬í•˜ì§€ ì•ŠëŠ” ì •ìƒ ê²°ê³¼ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
         /// </summary>
         public static LoadResult<T> NotFound()
         {
@@ -56,20 +56,20 @@ namespace CDG.Save
         }
 
         /// <summary>
-        /// ±âº» ÀúÀå ÆÄÀÏ¿¡¼­ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Â °á°ú¸¦ »ý¼ºÇÕ´Ï´Ù.
-        /// ÂüÁ¶ Å¸ÀÔÀÇ °æ¿ì nullµµ °ªÀ¸·Î Çã¿ëÇÕ´Ï´Ù.
+        /// ê¸°ë³¸ ì €ìž¥ íŒŒì¼ì—ì„œ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¨ ê²°ê³¼ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+        /// ì°¸ì¡° íƒ€ìž…ì˜ ê²½ìš° nullë„ ê°’ìœ¼ë¡œ í—ˆìš©í•©ë‹ˆë‹¤.
         /// </summary>
-        /// <param name="value">ºÒ·¯¿Â ÀúÀå µ¥ÀÌÅÍÀÔ´Ï´Ù.</param>
+        /// <param name="value">ë¶ˆëŸ¬ì˜¨ ì €ìž¥ ë°ì´í„°ìž…ë‹ˆë‹¤.</param>
         public static LoadResult<T> FromPrimary(T value)
         {
             return new LoadResult<T>(SaveLoadStatus.LoadedFromPrimary, value);
         }
 
         /// <summary>
-        /// ¹é¾÷ ÀúÀå ÆÄÀÏ¿¡¼­ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Â °á°ú¸¦ »ý¼ºÇÕ´Ï´Ù.
-        /// ÂüÁ¶ Å¸ÀÔÀÇ °æ¿ì nullµµ °ªÀ¸·Î Çã¿ëÇÕ´Ï´Ù.
+        /// ë°±ì—… ì €ìž¥ íŒŒì¼ì—ì„œ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¨ ê²°ê³¼ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+        /// ì°¸ì¡° íƒ€ìž…ì˜ ê²½ìš° nullë„ ê°’ìœ¼ë¡œ í—ˆìš©í•©ë‹ˆë‹¤.
         /// </summary>
-        /// <param name="value">ºÒ·¯¿Â ÀúÀå µ¥ÀÌÅÍÀÔ´Ï´Ù.</param>
+        /// <param name="value">ë¶ˆëŸ¬ì˜¨ ì €ìž¥ ë°ì´í„°ìž…ë‹ˆë‹¤.</param>
         public static LoadResult<T> FromBackup(T value)
         {
             return new LoadResult<T>(SaveLoadStatus.LoadedFromBackup, value);

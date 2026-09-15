@@ -1,53 +1,53 @@
-namespace CDG.Save
+ï»¿namespace CDG.Save
 {
     /// <summary>
-    /// Save Framework¿¡¼­ ¹ß»ıÇÒ ¼ö ÀÖ´Â ¿À·ù¸¦ ½Äº°ÇÏ±â À§ÇÑ ¿À·ù ÄÚµåÀÔ´Ï´Ù.
-    /// ½ÇÁ¦ ¿À·ù ¼³¸íÀº <c>ResultError.Message</c>¸¦ ÅëÇØ ÇÔ²² Á¦°øÇÕ´Ï´Ù.
+    /// Save Frameworkì—ì„œ ë°œìƒí•  ìˆ˜ ìˆëŠ” ì˜¤ë¥˜ë¥¼ ì‹ë³„í•˜ê¸° ìœ„í•œ ì˜¤ë¥˜ ì½”ë“œì…ë‹ˆë‹¤.
+    /// ì‹¤ì œ ì˜¤ë¥˜ ì„¤ëª…ì€ <c>ResultError.Message</c>ë¥¼ í†µí•´ í•¨ê»˜ ì œê³µí•©ë‹ˆë‹¤.
     /// </summary>
     public static class SaveErrorCodes
     {
         /// <summary>
-        /// ÀúÀå ¶Ç´Â Á÷·ÄÈ­ÇÒ µ¥ÀÌÅÍ°¡ À¯È¿ÇÏÁö ¾ÊÀº °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ì €ì¥ ë˜ëŠ” ì§ë ¬í™”í•  ë°ì´í„°ê°€ ìœ íš¨í•˜ì§€ ì•Šì€ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string InvalidData = "save.invalid_data";
 
         /// <summary>
-        /// ÀúÀå µ¥ÀÌÅÍ¸¦ Á÷·ÄÈ­ÇÏÁö ¸øÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ì €ì¥ ë°ì´í„°ë¥¼ ì§ë ¬í™”í•˜ì§€ ëª»í•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string SerializationFailed = "save.serialization_failed";
 
         /// <summary>
-        /// ÀúÀå µ¥ÀÌÅÍ¸¦ ¿ªÁ÷·ÄÈ­ÇÏÁö ¸øÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ì €ì¥ ë°ì´í„°ë¥¼ ì—­ì§ë ¬í™”í•˜ì§€ ëª»í•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string DeserializationFailed = "save.deserialization_failed";
 
         /// <summary>
-        /// ¿äÃ»ÇÑ ÀúÀå ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê´Â °æ¿ì Storage °èÃş¿¡¼­ »ç¿ëÇÕ´Ï´Ù.
+        /// ìš”ì²­í•œ ì €ì¥ íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²½ìš° Storage ê³„ì¸µì—ì„œ ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string StorageNotFound = "save.storage_not_found";
 
         /// <summary>
-        /// ÀúÀå ÆÄÀÏÀ» ÀĞ´Â °úÁ¤¿¡¼­ ¿À·ù°¡ ¹ß»ıÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ì €ì¥ íŒŒì¼ì„ ì½ëŠ” ê³¼ì •ì—ì„œ ì˜¤ë¥˜ê°€ ë°œìƒí•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string StorageReadFailed = "save.storage_read_failed";
 
         /// <summary>
-        /// ±âº» ÀúÀå ÆÄÀÏÀ» ±â·ÏÇÏ´Â °úÁ¤¿¡¼­ ¿À·ù°¡ ¹ß»ıÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ê¸°ë³¸ ì €ì¥ íŒŒì¼ì„ ê¸°ë¡í•˜ëŠ” ê³¼ì •ì—ì„œ ì˜¤ë¥˜ê°€ ë°œìƒí•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string StorageWriteFailed = "save.storage_write_failed";
 
         /// <summary>
-        /// ±âº» ÀúÀå ÆÄÀÏ ±â·Ï ÈÄ ¹é¾÷ ÆÄÀÏ ±â·Ï¿¡ ½ÇÆĞÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ê¸°ë³¸ ì €ì¥ íŒŒì¼ ê¸°ë¡ í›„ ë°±ì—… íŒŒì¼ ê¸°ë¡ì— ì‹¤íŒ¨í•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string BackupWriteFailed = "save.backup_write_failed";
 
         /// <summary>
-        /// ÀúÀå ÆÄÀÏÀ» »èÁ¦ÇÏ´Â °úÁ¤¿¡¼­ ¿À·ù°¡ ¹ß»ıÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ì €ì¥ íŒŒì¼ì„ ì‚­ì œí•˜ëŠ” ê³¼ì •ì—ì„œ ì˜¤ë¥˜ê°€ ë°œìƒí•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string StorageDeleteFailed = "save.storage_delete_failed";
 
         /// <summary>
-        /// ÀúÀå µ¥ÀÌÅÍ°¡ ¼Õ»óµÇ¾î Á¤»óÀûÀÎ º¹¿øÀÌ ºÒ°¡´ÉÇÑ °æ¿ì »ç¿ëÇÕ´Ï´Ù.
+        /// ì €ì¥ ë°ì´í„°ê°€ ì†ìƒë˜ì–´ ì •ìƒì ì¸ ë³µì›ì´ ë¶ˆê°€ëŠ¥í•œ ê²½ìš° ì‚¬ìš©í•©ë‹ˆë‹¤.
         /// </summary>
         public const string CorruptedData = "save.corrupted_data";
     }
